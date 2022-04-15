@@ -1,0 +1,128 @@
+# Made by Maciej Bromirski
+name: Generate Readme
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: "* 0 * * *"
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64'
+      - name: Install Py-Dependencies
+        run: python3 -m pip install requests
+
+      - name: Generate
+        run: |
+          YEARS="1978"
+          NF_LOCAL="lukasz@bromirski.net"
+          NF_UPTIME="$YEARS"
+          NF_LANGS="$(python3 -c "import requests, os
+          headers = {\"Authorization\": f\"token ${{ secrets.LANG_TOKEN }}\"}
+          langs = {}
+          ignored = [\"HTML\", \"JavaScript\", \"CSS\"]
+          r1 = requests.get(\"https://api.github.com/user/repos?per_page=100&affiliation=owner\", headers = headers).json()
+          for r in r1:
+              r2 = requests.get(f\"https://api.github.com/repos/{r['full_name']}/languages\", headers = headers).json()
+              if len(r2) != 0:
+                  for lang in r2:
+                      if lang not in langs and lang not in ignored:
+                          langs[lang] = r2[lang]
+                      elif lang not in ignored:
+                          langs[lang] += r2[lang]
+          sum_per = 0
+          for lang in langs:
+              sum_per += langs[lang]
+          for lang in dict(sorted(langs.items(), key = lambda item: item[1], reverse = True)):
+              if round(langs[lang] / sum_per * 100) != 0:
+                  print(f\"{lang} = {round(langs[lang] / sum_per * 100)}%\")")"
+          echo $NF_LANGS
+          NF_LANG1="$(awk '{split($0, array, ", "); print array[1]}' <<< "$NF_LANGS")"
+          NF_LANG2="$(awk '{split($0, array, ", "); print array[2]}' <<< "$NF_LANGS")"
+          NF_LANG3="$(awk '{split($0, array, ", "); print array[3]}' <<< "$NF_LANGS")"
+          NF_LANG4="$(awk '{split($0, array, ", "); print array[4]}' <<< "$NF_LANGS")"
+          NF_LANG5="$(awk '{split($0, array, ", "); print array[5]}' <<< "$NF_LANGS")"
+          NF_OS="MacOS"
+          NF_SHELL="sh"
+          NF_EDITOR="vim"
+          NF_WEBSITE="https://lukasz.bromirski.net"
+          NF_TWITTER="@LukaszBromirski"
+          NF_GITHUB="https://www.github.com/lukasz-bromirski"
+          echo -e "\`\`\`\n\
+          \$ lukefetch\n\
+                            .~vVeZNgQBBBQQg9Ze1v~.                         \n\
+                        \`^}%B@@@@@@@@@@@@@@@@@@@@@@8%}=\`                 $NF_LOCAL \n\
+                       -Lq#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#qr-            ------------------- \n\
+                  .V0@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@0?.           Uptime: $NF_UPTIME \n\
+                _l#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#l\`         OS: $NF_OS \n\
+              \`o@@@@@@@@v^r}P0@@@@@@@@@@@@@@@@@@@@ghlr<r@@@@@@@#o\`       Shell: $NF_SHELL \n\
+             ;0@@@@@@@@0      .?szL?*;!!!!~*|]Vox_      P@@@@@@@@0.      Editor: $NF_EDITOR \n\
+            ?@@@@@@@@@@q                                z@@@@@@@@@#?     \n\
+           :@@@@@@@@@@@Q                                R@@@@@@@@@@@\"     \n\
+          _g@@@@@@@@@@2-                                \`M@@@@@@@@@@0    contact \n\
+          a@@@@@@@@@@2                                    v@@@@@@@@@@;   ------------------- \n\
+          #@@@@@@@@@@_                                     @@@@@@@@@@y   Website: $NF_WEBSITE \n\
+          @@@@@@@@@@@.                                     @@@@@@@@@@%   \n\
+          #@@@@@@@@@@r                                    :@@@@@@@@@@s   Twitter: $NF_TWITTER \n\
+          W@@@@@@@@@@Q\`                                  _0@@@@@@@@@@*   Github: $NF_GITHUB \n\
+          ~#@@@@@@@@@@9!                                ,Q@@@@@@@@@@#    \n\
+           ;@@@@@@@@@@@@6^.                          \`\\p@@@@@@@@@@@@~    \n\
+            n@@@@@PlVd@@@@#6Vv~_\`              \`_!?zd#@@@@@@@@@@@@#n     languages \n\
+             2#@@@#hr _Y#@@@@@@@#q\`          \`X#@@@@@@@@@@@@@@@@@#~      ------------------- \n\
+              .d@@@@@D\` .n6#@@@#V\`             Q@@@@@@@@@@@@@@@@d.       $NF_LANG1 \n\
+                x0@@@@0^   \`__-                M@@@@@@@@@@@@@@0=         $NF_LANG2 \n\
+                  =p#@@@#%Il]]L1,              M@@@@@@@@@@@#V=           $NF_LANG3 \n\
+                    \`vR#@@@@@@@@?              M@@@@@@@@#Pv\`             $NF_LANG4 \n\
+                        \"Lf8@@@@v              q@@@#Qa?:                 $NF_LANG5 \n\
+                            -!v|\`              _?v!\`                     \n\
+
+          \`\`\`"
+          echo -e "\`\`\`\n\
+          \$ lukefetch\n\
+                            .~vVeZNgQBBBQQg9Ze1v~.                         \n\
+                        \`^}%B@@@@@@@@@@@@@@@@@@@@@@8%}=\`                 $NF_LOCAL \n\
+                       -Lq#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#qr-            ------------------- \n\
+                  .V0@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@0?.           Uptime: $NF_UPTIME \n\
+                _l#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#l\`         OS: $NF_OS \n\
+              \`o@@@@@@@@v^r}P0@@@@@@@@@@@@@@@@@@@@ghlr<r@@@@@@@#o\`       Shell: $NF_SHELL \n\
+             ;0@@@@@@@@0      .?szL?*;!!!!~*|]Vox_      P@@@@@@@@0.      Editor: $NF_EDITOR \n\
+            ?@@@@@@@@@@q                                z@@@@@@@@@#?     \n\
+           :@@@@@@@@@@@Q                                R@@@@@@@@@@@\"     \n\
+          _g@@@@@@@@@@2-                                \`M@@@@@@@@@@0    contact \n\
+          a@@@@@@@@@@2                                    v@@@@@@@@@@;   ------------------- \n\
+          #@@@@@@@@@@_                                     @@@@@@@@@@y   Website: $NF_WEBSITE \n\
+          @@@@@@@@@@@.                                     @@@@@@@@@@%   \n\
+          #@@@@@@@@@@r                                    :@@@@@@@@@@s   Twitter: $NF_TWITTER \n\
+          W@@@@@@@@@@Q\`                                  _0@@@@@@@@@@*   Github: $NF_GITHUB \n\
+          ~#@@@@@@@@@@9!                                ,Q@@@@@@@@@@#    \n\
+           ;@@@@@@@@@@@@6^.                          \`\\p@@@@@@@@@@@@~    \n\
+            n@@@@@PlVd@@@@#6Vv~_\`              \`_!?zd#@@@@@@@@@@@@#n     languages \n\
+             2#@@@#hr _Y#@@@@@@@#q\`          \`X#@@@@@@@@@@@@@@@@@#~      ------------------- \n\
+              .d@@@@@D\` .n6#@@@#V\`             Q@@@@@@@@@@@@@@@@d.       $NF_LANG1 \n\
+                x0@@@@0^   \`__-                M@@@@@@@@@@@@@@0=         $NF_LANG2 \n\
+                  =p#@@@#%Il]]L1,              M@@@@@@@@@@@#V=           $NF_LANG3 \n\
+                    \`vR#@@@@@@@@?              M@@@@@@@@#Pv\`             $NF_LANG4 \n\
+                        \"Lf8@@@@v              q@@@#Qa?:                 $NF_LANG5 \n\
+                            -!v|\`              _?v!\`                     \n\
+
+          \`\`\`" > README.md
+
+      - name: Commit & Push Changes
+        run: |
+          git add README.md
+          git config user.name 'github-actions'
+          git config user.email 'github-actions@github.com'
+          git commit -am 'Readme Update' || true
+          git push
