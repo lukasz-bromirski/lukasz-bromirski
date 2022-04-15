@@ -1,4 +1,4 @@
-# Made by Maciej Bromirski
+# (c) 2022 Maciej Bromirski
 name: Generate Readme
 on:
   push:
@@ -47,13 +47,14 @@ jobs:
               sum_per += langs[lang]
           for lang in dict(sorted(langs.items(), key = lambda item: item[1], reverse = True)):
               if round(langs[lang] / sum_per * 100) != 0:
-                  print(f\"{lang} = {round(langs[lang] / sum_per * 100)}%, \")")"
+                  print(f\"{lang} = {round(langs[lang] / sum_per * 100)}%\", end = ', ')")"
           echo $NF_LANGS
           NF_LANG1="$(awk '{split($0, array, ", "); print array[1]}' <<< "$NF_LANGS")"
           NF_LANG2="$(awk '{split($0, array, ", "); print array[2]}' <<< "$NF_LANGS")"
           NF_LANG3="$(awk '{split($0, array, ", "); print array[3]}' <<< "$NF_LANGS")"
           NF_LANG4="$(awk '{split($0, array, ", "); print array[4]}' <<< "$NF_LANGS")"
           NF_LANG5="$(awk '{split($0, array, ", "); print array[5]}' <<< "$NF_LANGS")"
+          NF_LANG6="$(awk '{split($0, array, ", "); print array[6]}' <<< "$NF_LANGS")"
           NF_OS="MacOS"
           NF_SHELL="sh"
           NF_EDITOR="vim"
@@ -74,18 +75,18 @@ jobs:
           _g@@@@@@@@@@2-                                \`M@@@@@@@@@@0    contact \n\
           a@@@@@@@@@@2                                    v@@@@@@@@@@;   ------------------- \n\
           #@@@@@@@@@@_                                     @@@@@@@@@@y   Website: $NF_WEBSITE \n\
-          @@@@@@@@@@@.                                     @@@@@@@@@@%   \n\
-          #@@@@@@@@@@r                                    :@@@@@@@@@@s   Twitter: $NF_TWITTER \n\
-          W@@@@@@@@@@Q\`                                  _0@@@@@@@@@@*   Github: $NF_GITHUB \n\
+          @@@@@@@@@@@.                                     @@@@@@@@@@%   Twitter: $NF_TWITTER \n\
+          #@@@@@@@@@@r                                    :@@@@@@@@@@s   Github: $NF_GITHUB \n\
+          W@@@@@@@@@@Q\`                                  _0@@@@@@@@@@*   \n\
           ~#@@@@@@@@@@9!                                ,Q@@@@@@@@@@#    \n\
-           ;@@@@@@@@@@@@6^.                          \`\\p@@@@@@@@@@@@~    \n\
-            n@@@@@PlVd@@@@#6Vv~_\`              \`_!?zd#@@@@@@@@@@@@#n     languages \n\
-             2#@@@#hr _Y#@@@@@@@#q\`          \`X#@@@@@@@@@@@@@@@@@#~      ------------------- \n\
-              .d@@@@@D\` .n6#@@@#V\`             Q@@@@@@@@@@@@@@@@d.       $NF_LANG1 \n\
-                x0@@@@0^   \`__-                M@@@@@@@@@@@@@@0=         $NF_LANG2 \n\
-                  =p#@@@#%Il]]L1,              M@@@@@@@@@@@#V=           $NF_LANG3 \n\
-                    \`vR#@@@@@@@@?              M@@@@@@@@#Pv\`             $NF_LANG4 \n\
-                        \"Lf8@@@@v              q@@@#Qa?:                 $NF_LANG5 \n\
+           ;@@@@@@@@@@@@6^.                          \`\\p@@@@@@@@@@@@~    languages \n\
+            n@@@@@PlVd@@@@#6Vv~_\`              \`_!?zd#@@@@@@@@@@@@#n     ------------------- \n\
+             2#@@@#hr _Y#@@@@@@@#q\`          \`X#@@@@@@@@@@@@@@@@@#~      $NF_LANG1 \n\
+              .d@@@@@D\` .n6#@@@#V\`             Q@@@@@@@@@@@@@@@@d.       $NF_LANG2 \n\
+                x0@@@@0^   \`__-                M@@@@@@@@@@@@@@0=         $NF_LANG3 \n\
+                  =p#@@@#%Il]]L1,              M@@@@@@@@@@@#V=           $NF_LANG4 \n\
+                    \`vR#@@@@@@@@?              M@@@@@@@@#Pv\`             $NF_LANG5 \n\
+                        \"Lf8@@@@v              q@@@#Qa?:                 $NF_LANG6 \n\
                             -!v|\`              _?v!\`                     \n\
 
           \`\`\`"
@@ -103,18 +104,18 @@ jobs:
           _g@@@@@@@@@@2-                                \`M@@@@@@@@@@0    contact \n\
           a@@@@@@@@@@2                                    v@@@@@@@@@@;   ------------------- \n\
           #@@@@@@@@@@_                                     @@@@@@@@@@y   Website: $NF_WEBSITE \n\
-          @@@@@@@@@@@.                                     @@@@@@@@@@%   \n\
-          #@@@@@@@@@@r                                    :@@@@@@@@@@s   Twitter: $NF_TWITTER \n\
-          W@@@@@@@@@@Q\`                                  _0@@@@@@@@@@*   Github: $NF_GITHUB \n\
+          @@@@@@@@@@@.                                     @@@@@@@@@@%   Twitter: $NF_TWITTER \n\
+          #@@@@@@@@@@r                                    :@@@@@@@@@@s   Github: $NF_GITHUB \n\
+          W@@@@@@@@@@Q\`                                  _0@@@@@@@@@@*   \n\
           ~#@@@@@@@@@@9!                                ,Q@@@@@@@@@@#    \n\
-           ;@@@@@@@@@@@@6^.                          \`\\p@@@@@@@@@@@@~    \n\
-            n@@@@@PlVd@@@@#6Vv~_\`              \`_!?zd#@@@@@@@@@@@@#n     languages \n\
-             2#@@@#hr _Y#@@@@@@@#q\`          \`X#@@@@@@@@@@@@@@@@@#~      ------------------- \n\
-              .d@@@@@D\` .n6#@@@#V\`             Q@@@@@@@@@@@@@@@@d.       $NF_LANG1 \n\
-                x0@@@@0^   \`__-                M@@@@@@@@@@@@@@0=         $NF_LANG2 \n\
-                  =p#@@@#%Il]]L1,              M@@@@@@@@@@@#V=           $NF_LANG3 \n\
-                    \`vR#@@@@@@@@?              M@@@@@@@@#Pv\`             $NF_LANG4 \n\
-                        \"Lf8@@@@v              q@@@#Qa?:                 $NF_LANG5 \n\
+           ;@@@@@@@@@@@@6^.                          \`\\p@@@@@@@@@@@@~    languages \n\
+            n@@@@@PlVd@@@@#6Vv~_\`              \`_!?zd#@@@@@@@@@@@@#n     ------------------- \n\
+             2#@@@#hr _Y#@@@@@@@#q\`          \`X#@@@@@@@@@@@@@@@@@#~      $NF_LANG1 \n\
+              .d@@@@@D\` .n6#@@@#V\`             Q@@@@@@@@@@@@@@@@d.       $NF_LANG2 \n\
+                x0@@@@0^   \`__-                M@@@@@@@@@@@@@@0=         $NF_LANG3 \n\
+                  =p#@@@#%Il]]L1,              M@@@@@@@@@@@#V=           $NF_LANG4 \n\
+                    \`vR#@@@@@@@@?              M@@@@@@@@#Pv\`             $NF_LANG5 \n\
+                        \"Lf8@@@@v              q@@@#Qa?:                 $NF_LANG6 \n\
                             -!v|\`              _?v!\`                     \n\
 
           \`\`\`" > README.md
