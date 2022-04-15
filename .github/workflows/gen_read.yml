@@ -47,7 +47,7 @@ jobs:
               sum_per += langs[lang]
           for lang in dict(sorted(langs.items(), key = lambda item: item[1], reverse = True)):
               if round(langs[lang] / sum_per * 100) != 0:
-                  print(f\"{lang} = {round(langs[lang] / sum_per * 100)}%\")")"
+                  print(f\"{lang} = {round(langs[lang] / sum_per * 100)}%, \")")"
           echo $NF_LANGS
           NF_LANG1="$(awk '{split($0, array, ", "); print array[1]}' <<< "$NF_LANGS")"
           NF_LANG2="$(awk '{split($0, array, ", "); print array[2]}' <<< "$NF_LANGS")"
